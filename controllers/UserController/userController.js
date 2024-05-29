@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const User = require('../../models/userModel')
 const Event = require('../../models/EventModel')
+const Attendees = require('../../models/attendeesModel')
 const { generateJWT } = require('../../helpers/generateJWT')
 const { generateToken } = require('../../helpers/generateToken')
 const { deleteImg } = require('../../middleware/deleteImage')
@@ -27,7 +28,7 @@ const create = async (req, res, next) => {
     newUserEmail(user)
     return res
       .status(201)
-      .json({ message: 'User registered successfully😉', createUser })
+      .json({ message: 'User registered successfully😉', user })
   } catch (error) {
     if (req.file) deleteImg(req.file.path)
     console.log(error)
@@ -100,12 +101,6 @@ const events = async (req, res) => {
   const { user } = req
   try {
     const existUser = await User.findById(user._id)
-    if (!existUser) {
-      return res.status(409).json({
-        message:
-          'There was an authentication problem, please log out and log in again😢'
-      })
-    }
     const event = new Event(req.body)
     event.image = req.file.path
     event.created = user._id
@@ -127,7 +122,24 @@ const events = async (req, res) => {
   }
 }
 const attendees = async (req, res) => {
-  /**ATTENDEES CONFIRM EVENTS */
+  const { user } = req
+  const { _id } = req.params
+  const event = await Event.findById(_id)
+  if (!event) return res.status(409).json({ message: 'Event not found😢' })
+  const confirmed = await Attendees.find().where('userId').equals(user._id)
+  const filterConfirmed = confirmed?.filter(
+    (val) => val.eventId.toString() === _id.toString()
+  )
+  if (filterConfirmed.length > 0)
+    return res
+      .status(201)
+      .json({ message: 'You have already confirmed this event previously😉' })
+  const attendeenses = new Attendees({
+    userId: user._id,
+    eventId: _id
+  })
+  await attendeenses.save()
+  return res.status(200).json({ message: 'Event confirmed🥳' })
 }
 
 module.exports = {
