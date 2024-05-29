@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const User = require('../../models/userModel')
-const Event = require('../../models/EventModel')
+const Event = require('../../models/eventModel')
 const Attendees = require('../../models/attendeesModel')
 const { generateJWT } = require('../../helpers/generateJWT')
 const { generateToken } = require('../../helpers/generateToken')
