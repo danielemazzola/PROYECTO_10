@@ -99,11 +99,14 @@ const events = async (req, res) => {
   try {
     const event = new Event(req.body)
     event.image = req.file.path
-    event.created = user._id
+    event.creator = user._id
     await event.save()
     newEventEmail({ user, event })
     await User.updateOne({ _id: user._id }, { $push: { events: event._id } })
-    const newEvent = await Event.findById(event._id).populate('created')
+    const newEvent = await Event.findById(event._id).populate({
+      path: 'creator',
+      select: 'name lastName email avatar roles'
+    })
     return res
       .status(200)
       .json({ message: 'Event create successfully🤩', newEvent })

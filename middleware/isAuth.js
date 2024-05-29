@@ -14,7 +14,9 @@ const isAuth = async (req, res, next) => {
     if (!user) {
       return res
         .status(401)
-        .json({ message: 'User not exist, please register😑' })
+        .json({
+          message: 'You are not registerd on the website, please register😑'
+        })
     } else {
       req.user = user
       next()
