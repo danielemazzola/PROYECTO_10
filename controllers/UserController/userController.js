@@ -79,10 +79,6 @@ const newPassword = async (req, res) => {
   const { token } = req.params
   try {
     const user = await User.findOne({ token })
-    if (!user)
-      return res
-        .status(404)
-        .json({ message: 'Token not found, please login😉' })
     const { password } = req.body
     user.password = password
     user.token = ''
@@ -101,20 +97,13 @@ const newPassword = async (req, res) => {
 const events = async (req, res) => {
   const { user } = req
   try {
-    const existUser = await User.findById(user._id)
     const event = new Event(req.body)
     event.image = req.file.path
     event.created = user._id
     await event.save()
     newEventEmail({ user, event })
     await User.updateOne({ _id: user._id }, { $push: { events: event._id } })
-    const newEvent = await Event.findById(event._id).populate({
-      path: 'created',
-      populate: {
-        path: 'events',
-        model: 'Event'
-      }
-    })
+    const newEvent = await Event.findById(event._id).populate('created')
     return res
       .status(200)
       .json({ message: 'Event create successfully🤩', newEvent })
