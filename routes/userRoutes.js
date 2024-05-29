@@ -1,6 +1,7 @@
 const express = require('express')
 const { profile, eventsImg } = require('../middleware/uploadImage')
 const { isAuth } = require('../middleware/isAuth')
+const { isConfirmedEvent } = require('../middleware/isConfirmedEvent')
 const {
   create,
   recoverPassword,
@@ -16,6 +17,6 @@ ROUTER.post('/recovery', recoverPassword) // RECOVER PASSWORD
 ROUTER.post('/recovery-password/:token', newPassword) // RECOVER PASSWORD
 ROUTER.post('/login', login) // LOGIN
 ROUTER.post('/events', eventsImg.single('image'), isAuth, events) //CREATE EVENTS
-ROUTER.get('/attendees/:_id', isAuth, attendees) // ATTENDEES CONFIRM EVENTS
+ROUTER.get('/attendees/:_id', isAuth, isConfirmedEvent, attendees) // ATTENDEES CONFIRM EVENTS
 
 module.exports = ROUTER
