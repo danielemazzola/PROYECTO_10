@@ -9,7 +9,8 @@ const {
   newUserEmail,
   recoverEmail,
   newPasswordEmail,
-  newEventEmail
+  newEventEmail,
+  confirmEvent
 } = require('./helpers/sendEmails')
 
 const create = async (req, res, next) => {
@@ -139,6 +140,7 @@ const attendees = async (req, res) => {
     eventId: _id
   })
   await attendeenses.save()
+  confirmEvent({ user, event })
   return res.status(200).json({ message: 'Event confirmed🥳' })
 }
 

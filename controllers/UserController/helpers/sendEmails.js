@@ -291,6 +291,76 @@ const newEventEmail = async ({ user, event }) => {
     </html>`
   await sendMail(user.email, 'New event created successfully🤩', htmlContent)
 }
-newEventEmail
+const confirmEvent = async ({ user, event }) => {
+  const htmlContent = `<!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+        }
+        .header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .content {
+            padding: 20px;
+            color: #333333;
+        }
+        .content p {
+            margin: 0 0 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #777777;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="email-container">
+          <div class="header">
+              <h1>Daniele's Company</h1>
+          </div>
+          <div class="content">
+              <p>Hola <strong>${user.name}</strong>,</p>
+              <p>Has confirmado tu asistencia para el evento:</p>
+              <p><strong>${event.title}</strong></p>
+              <p>Para el día <strong>${event.date}</strong></p>
+              <p>Gracias por confiar en nosotros.</p>
+              <p>Saludos cordiales,</p>
+              <p><strong>Daniele Mazzola</strong></p>
+              <p>CEO - Founder</p>
+          </div>
+          <div class="footer">
+              <p>Este es un correo electrónico automático, por favor no respondas a este mensaje.</p>
+          </div>
+      </div>
+    </body>
+    </html>`
+  await sendMail(user.email, 'New event confirmed successfully🤩', htmlContent)
+}
 
-module.exports = { newUserEmail, recoverEmail, newPasswordEmail, newEventEmail }
+module.exports = {
+  newUserEmail,
+  recoverEmail,
+  newPasswordEmail,
+  newEventEmail,
+  confirmEvent
+}
