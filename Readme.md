@@ -50,13 +50,13 @@ Project 10 Rock the Code is a web application developed with Node.js that allows
   - `PUT /recovery-password/:token` : Recover password using token
   - `POST /login` : Log in
   - `POST /events` : Create events (requires authentication and allows image upload)
-  - `GET /attendees/:_id` : View confirmed attendees for an event (requires authentication)
+  - `GET /attendees/:_id` : View confirmed attendees for an event (not requires authentication)
 
 ### Event Routes
 
 - **/api/events**
-  - `GET /` : List events (requires authentication)
-  - `GET /:_id` : Get event details (requires authentication)
+  - `GET /` : List events (not requires authentication)
+  - `GET /:_id` : Get event details (not requires authentication)
   - `PUT /:_id` : Update event (requires authentication and permissions, allows image upload)
 
 ### Attendee Routes
@@ -108,10 +108,12 @@ The event model defines the structure of event data, including details about the
 
 The attendees model defines the relationship between users and events, tracking attendance.
 
-| Field   | Type     | Description             |
-| ------- | -------- | ----------------------- |
-| userId  | ObjectId | Reference to the user.  |
-| eventId | ObjectId | Reference to the event. |
+| Field    | Type     | Description                 |
+| -------- | -------- | --------------------------- |
+| name     | String   | The first name of the user. |
+| lastName | String   | The last name of the user.  |
+| email    | String   | The user's email address.   |
+| eventId  | ObjectId | Reference to the event.     |
 
 ## Email Notifications ✉️
 

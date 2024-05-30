@@ -10,8 +10,8 @@ const {
 } = require('../controllers/EventController/eventController')
 const ROUTER = express.Router()
 
-ROUTER.get('/', isAuth, getEvents) // LIST EVENTS
-ROUTER.get('/:_id', isAuth, getEvent) // EVENT
+ROUTER.get('/', getEvents) // LIST EVENTS
+ROUTER.get('/:_id', getEvent) // EVENT
 ROUTER.put('/:_id', isAuth, Authority, eventsImg.single('image'), updateEvent)
 
 module.exports = ROUTER
