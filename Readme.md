@@ -125,6 +125,6 @@ The attendees model defines the relationship between users and events, tracking 
 
 ## Author
 
-Work done by Daniele Mazzola
+Work done by ❤️ Daniele Mazzola
 
 [GitHub Repository](https://github.com/danielemazzola/PROYECTO_10)
