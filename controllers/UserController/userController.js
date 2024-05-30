@@ -11,7 +11,7 @@ const {
   newPasswordEmail,
   newEventEmail,
   confirmEvent
-} = require('./helpers/sendEmails')
+} = require('../../helpers/emails/sendEmails')
 
 const create = async (req, res, next) => {
   const { email } = req.body

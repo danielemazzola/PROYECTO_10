@@ -2,7 +2,7 @@ const Event = require('../../models/eventModel')
 const { deleteImg } = require('../../middleware/deleteImage')
 const Attendees = require('../../models/attendeesModel')
 const User = require('../../models/userModel')
-const { newEventEmail } = require('../UserController/helpers/sendEmails')
+const { newEventEmail } = require('../../helpers/emails/sendEmails')
 
 const events = async (req, res) => {
   const { user } = req

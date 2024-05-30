@@ -1,6 +1,6 @@
 const Attendees = require('../../models/attendeesModel')
 const Event = require('../../models/eventModel')
-const { confirmEvent } = require('../UserController/helpers/sendEmails')
+const { confirmEvent } = require('../../helpers/emails/sendEmails')
 
 const attendees = async (req, res) => {
   let user = {}

@@ -49,12 +49,11 @@ Project 10 Rock the Code is a web application developed with Node.js that allows
   - `POST /recovery-password` : Request password recovery
   - `PUT /recovery-password/:token` : Recover password using token
   - `POST /login` : Log in
-  - `POST /events` : Create events (requires authentication and allows image upload)
-  - `GET /attendees/:_id` : View confirmed attendees for an event (not requires authentication)
 
 ### Event Routes
 
 - **/api/events**
+  - `POST /events` : Create events (requires authentication and allows image upload)
   - `GET /` : List events (not requires authentication)
   - `GET /:_id` : Get event details (not requires authentication)
   - `PUT /:_id` : Update event (requires authentication and permissions, allows image upload)
@@ -62,6 +61,7 @@ Project 10 Rock the Code is a web application developed with Node.js that allows
 ### Attendee Routes
 
 - **/api/attendees**
+  - `GET /:_id` : View confirmed attendees for an event (not requires authentication)
   - `GET /` : List confirmed attendees (requires authentication)
   - `GET /:_id` : View attendee details (requires authentication)
 
@@ -95,14 +95,15 @@ The user model defines the structure of user data in the application, including 
 
 The event model defines the structure of event data, including details about the event and its creator.
 
-| Field       | Type     | Description                     |
-| ----------- | -------- | ------------------------------- |
-| title       | String   | The title of the event.         |
-| description | String   | The description of the event.   |
-| image       | String   | URL to the event's image.       |
-| date        | Date     | The date of the event.          |
-| location    | String   | The location of the event.      |
-| creator     | ObjectId | The user who created the event. |
+| Field       | Type     | Description                       |
+| ----------- | -------- | --------------------------------- |
+| title       | String   | The title of the event.           |
+| description | String   | The description of the event.     |
+| image       | String   | URL to the event's image.         |
+| date        | Date     | The date of the event.            |
+| location    | String   | The location of the event.        |
+| creator     | ObjectId | The user who created the event.   |
+| attendees   | ObjectId | The user who confirmed attendees. |
 
 ### Attendees Model (attendeesModel)
 
