@@ -39,7 +39,7 @@
   "dev": "nodemon index.js",
   "start": "node index.js"
 }
-```
+
 
 📍 Routes
 User Routes
@@ -95,3 +95,4 @@ Event creation email
 Event attendance confirmation email
 Made with ❤️ by Daniele Mazzola
 GitHub Repository
+```
