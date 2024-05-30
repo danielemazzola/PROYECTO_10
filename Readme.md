@@ -1,12 +1,18 @@
-# 🎸 Proyecto 10 Rock the Code
+# Project 10 Rock the Code 🎸
 
-## 🚀 Technologies Used
+## Project Description
 
-- Node.js
-- Express.js
-- MongoDB
+Project 10 Rock the Code is a web application developed with Node.js that allows users to create and manage events, as well as confirm their attendance. Users can register, log in, recover their passwords, and upload images for their profiles and events.
 
-## 📦 Dependencies
+## Technologies Used 🚀
+
+- **Node.js**
+- **Express.js**
+- **MongoDB**
+
+## Dependencies 📦
+
+### Main Dependencies
 
 | Package                   | Version      |
 | ------------------------- | ------------ |
@@ -21,78 +27,102 @@
 | multer-storage-cloudinary | ^4.0.0       |
 | nodemailer                | ^6.9.13      |
 
-## 🛠️ Development Dependencies
+### Development Dependencies
 
 | Package | Version |
 | ------- | ------- |
 | nodemon | ^3.1.0  |
 
-## 📜 Scripts
+## Scripts 📜
 
-| Command | Description                      |
-| ------- | -------------------------------- |
-| dev     | Run the application with nodemon |
-| start   | Start the application            |
+| Command | Description                                                                 |
+| ------- | --------------------------------------------------------------------------- |
+| dev     | Runs the application in development mode using nodemon (`nodemon index.js`) |
+| start   | Starts the application (`node index.js`)                                    |
 
-```json
-"scripts": {
-  "dev": "nodemon index.js",
-  "start": "node index.js"
-}
+## Routes 🚦
 
+### User Routes
 
-📍 Routes
-User Routes
-Method Endpoint Description
-POST /api/auth/register Create a new user
-POST /api/auth/recovery-password Recover password
-PUT /api/auth/recovery-password/
-Update password with token
-POST /api/auth/login Login
-POST /api/auth/events Create event (requires auth)
-GET /api/auth/attendees/:\_id Get attendees of event (requires auth)
-Event Routes
-Method Endpoint Description
-GET /api/events List events (requires auth)
-GET /api/events/:\_id Get event details (requires auth)
-PUT /api/events/:\_id Update event (requires auth)
-Attendees Routes
-Method Endpoint Description
-GET /api/attendees List confirmed attendees (requires auth)
-GET /api/attendees/:\_id Get attendee details (requires auth)
-🛡️ Middleware
-isAuth: Validate if user is logged in.
-authority: Validate if the user is the event creator or an admin before updating event info.
-deleteImage: Delete images in Cloudinary.
-uploadImage: Upload images to Cloudinary.
-isConfirmedEvent: Validate if a user has confirmed attendance to an event.
-tokenRecoveryPassword: Validate if the user token exists for password recovery.
-🗃️ Models
-User Model
-name: String, required
-lastName: String, required
-email: String, required, unique
-password: String, required
-roles: Array of String, default: ['user']
-avatar: String, default URL provided
-token: String
-events: Array of ObjectId, references Event
-Event Model
-title: String, required
-description: String, required
-image: String, default URL provided
-date: Date, required
-location: String, required
-creator: ObjectId, references User
-Attendees Model
-userId: ObjectId, references User
-eventId: ObjectId, references Event
-📧 Email Notifications
-Welcome email after registration
-Password recovery email
-Password modification email
-Event creation email
-Event attendance confirmation email
-Made with ❤️ by Daniele Mazzola
-GitHub Repository
-```
+- **/api/auth**
+  - `POST /register` : Register new user (with avatar)
+  - `POST /recovery-password` : Request password recovery
+  - `PUT /recovery-password/:token` : Recover password using token
+  - `POST /login` : Log in
+  - `POST /events` : Create events (requires authentication and allows image upload)
+  - `GET /attendees/:_id` : View confirmed attendees for an event (requires authentication)
+
+### Event Routes
+
+- **/api/events**
+  - `GET /` : List events (requires authentication)
+  - `GET /:_id` : Get event details (requires authentication)
+  - `PUT /:_id` : Update event (requires authentication and permissions, allows image upload)
+
+### Attendee Routes
+
+- **/api/attendees**
+  - `GET /` : List confirmed attendees (requires authentication)
+  - `GET /:_id` : View attendee details (requires authentication)
+
+## Middleware 🔒
+
+- **isAuth** : User authentication validation.
+- **authority** : Permissions validation for event updates.
+- **deleteImage** : Delete images from Cloudinary.
+- **uploadImage** : Upload images to Cloudinary.
+- **isConfirmedEvent** : Validate if a user has confirmed attendance to an event.
+- **tokenRecoveryPassword** : Validate user's recovery token.
+
+## Data Models 🗂️
+
+### User Model (userModel)
+
+The user model defines the structure of user data in the application, including personal details, roles, and associated events.
+
+| Field    | Type       | Description                       |
+| -------- | ---------- | --------------------------------- |
+| name     | String     | The first name of the user.       |
+| lastName | String     | The last name of the user.        |
+| email    | String     | The user's email address, unique. |
+| password | String     | The user's password.              |
+| roles    | [String]   | The roles assigned to the user.   |
+| avatar   | String     | URL to the user's avatar image.   |
+| token    | String     | Token for user verification.      |
+| events   | [ObjectId] | Events associated with the user.  |
+
+### Event Model (eventModel)
+
+The event model defines the structure of event data, including details about the event and its creator.
+
+| Field       | Type     | Description                     |
+| ----------- | -------- | ------------------------------- |
+| title       | String   | The title of the event.         |
+| description | String   | The description of the event.   |
+| image       | String   | URL to the event's image.       |
+| date        | Date     | The date of the event.          |
+| location    | String   | The location of the event.      |
+| creator     | ObjectId | The user who created the event. |
+
+### Attendees Model (attendeesModel)
+
+The attendees model defines the relationship between users and events, tracking attendance.
+
+| Field   | Type     | Description             |
+| ------- | -------- | ----------------------- |
+| userId  | ObjectId | Reference to the user.  |
+| eventId | ObjectId | Reference to the event. |
+
+## Email Notifications ✉️
+
+- Welcome email after registration.
+- Password recovery email.
+- Password modification email.
+- Event creation email.
+- Event attendance confirmation email.
+
+## Author
+
+Work done by Daniele Mazzola
+
+[GitHub Repository](https://github.com/danielemazzola/PROYECTO_10)
