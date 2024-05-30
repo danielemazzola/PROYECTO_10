@@ -4,7 +4,7 @@ const { deleteImg } = require('../../middleware/deleteImage')
 const getEvents = async (req, res) => {
   try {
     const events = await Event.find().populate({
-      path: 'created',
+      path: 'creator',
       select: 'name lastName email roles avatar'
     })
     return res.status(200).json({ message: 'Events', events })
@@ -12,14 +12,14 @@ const getEvents = async (req, res) => {
     console.log(error)
     return res
       .status(500)
-      .json({ message: 'Ups, there was a problem, please try again.' })
+      .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 const getEvent = async (req, res) => {
   const { _id } = req.params
   try {
     const event = await Event.findById(_id).populate({
-      path: 'created',
+      path: 'creator',
       select: 'name lastName email roles avatar'
     })
     if (!event) return res.status(409).json({ message: 'Event not found' })
@@ -28,7 +28,7 @@ const getEvent = async (req, res) => {
     console.log(error)
     return res
       .status(500)
-      .json({ message: 'Ups, there was a problem, please try again.' })
+      .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 const updateEvent = async (req, res) => {
@@ -52,7 +52,7 @@ const updateEvent = async (req, res) => {
     console.log(error)
     return res
       .status(500)
-      .json({ message: 'Ups, there was a problem, please try again.' })
+      .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 

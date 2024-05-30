@@ -19,6 +19,6 @@ ROUTER.post('/recovery-password', recoverPassword) // RECOVER PASSWORD
 ROUTER.put('/recovery-password/:token', tokenRecoveryPassword, newPassword) // RECOVER PASSWORD
 ROUTER.post('/login', login) // LOGIN
 ROUTER.post('/events', eventsImg.single('image'), isAuth, events) //CREATE EVENTS
-ROUTER.get('/attendees/:_id', isAuth, isConfirmedEvent, attendees) // ATTENDEES CONFIRM EVENTS
+ROUTER.get('/attendees/:_id', isConfirmedEvent, attendees) // ATTENDEES CONFIRM EVENTS - REGISTER ALL USER AND VISITES
 
 module.exports = ROUTER

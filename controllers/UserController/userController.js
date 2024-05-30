@@ -35,7 +35,7 @@ const create = async (req, res, next) => {
     console.log(error)
     return res
       .status(201)
-      .json({ message: 'Ups, there was a problem, please try again.' })
+      .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 const login = async (req, res) => {
@@ -53,7 +53,7 @@ const login = async (req, res) => {
     console.log(error)
     return res
       .status(500)
-      .json({ message: 'Ups, there was a problem, please try again.' })
+      .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 const recoverPassword = async (req, res) => {
@@ -72,7 +72,7 @@ const recoverPassword = async (req, res) => {
     console.log(error)
     return res
       .status(500)
-      .json({ message: 'Ups, there was a problem, please try again.' })
+      .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 const newPassword = async (req, res) => {
@@ -91,7 +91,7 @@ const newPassword = async (req, res) => {
     console.log(error)
     return res
       .status(500)
-      .json({ message: 'Ups, there was a problem, please try again.' })
+      .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 const events = async (req, res) => {
@@ -114,27 +114,31 @@ const events = async (req, res) => {
     console.log(error)
     return res
       .status(500)
-      .json({ message: 'Ups, there was a problem, please try again.' })
+      .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 const attendees = async (req, res) => {
-  const { user } = req
+  let user = {}
   const { _id } = req.params
+  const { name, lastName, email } = req.body
   try {
     const event = await Event.findById(_id)
     if (!event) return res.status(409).json({ message: 'Event not found😢' })
     const attendeenses = new Attendees({
-      userId: user._id,
+      name: name,
+      lastName: lastName,
+      email: email,
       eventId: _id
     })
     await attendeenses.save()
+    user = { name, lastName, email }
     confirmEvent({ user, event })
     return res.status(200).json({ message: 'Event confirmed🥳' })
   } catch (error) {
     console.log(error)
     return res
       .status(500)
-      .json({ message: 'Ups, there was a problem, please try again.' })
+      .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 

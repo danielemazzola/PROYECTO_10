@@ -2,9 +2,17 @@ const mongoose = require('mongoose')
 
 const attendeesSchema = new mongoose.Schema(
   {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+    name: {
+      type: String,
+      require: true
+    },
+    lastName: {
+      type: String,
+      require: true
+    },
+    email: {
+      type: String,
+      require: true
     },
     eventId: {
       type: mongoose.Schema.Types.ObjectId,

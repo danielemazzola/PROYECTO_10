@@ -12,7 +12,7 @@ const tokenRecoveryPassword = async (req, res, next) => {
     console.log(error)
     return res
       .status(500)
-      .json({ message: 'Ups, there was a problem, please try again.' })
+      .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 module.exports = { tokenRecoveryPassword }
