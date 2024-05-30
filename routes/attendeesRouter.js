@@ -1,13 +1,15 @@
 const express = require('express')
+const ROUTER = express.Router()
 const { isAuth } = require('../middleware/isAuth')
-
+const { isConfirmedEvent } = require('../middleware/isConfirmedEvent')
 const {
+  attendees,
   getAttendees,
   getProfileAttendees
 } = require('../controllers/AttendeesController/attendeesController')
-const ROUTER = express.Router()
 
+ROUTER.post('/:id', isConfirmedEvent, attendees) // ATTENDEES CONFIRM EVENTS - REGISTER ALL USER AND VISITES
 ROUTER.get('/', isAuth, getAttendees) // LIST ATTENDEES CONFIRMED
-ROUTER.get('/:_id', isAuth, getProfileAttendees) // ATTENDEES DETAILS
+ROUTER.get('/:id', isAuth, getProfileAttendees) // ATTENDEES DETAILS
 
 module.exports = ROUTER

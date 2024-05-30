@@ -8,9 +8,7 @@ const {
   create,
   recoverPassword,
   newPassword,
-  login,
-  events,
-  attendees
+  login
 } = require('../controllers/UserController/userController')
 const ROUTER = express.Router()
 
@@ -18,7 +16,5 @@ ROUTER.post('/register', profile.single('avatar'), create) // NEW USER
 ROUTER.post('/recovery-password', recoverPassword) // RECOVER PASSWORD
 ROUTER.put('/recovery-password/:token', tokenRecoveryPassword, newPassword) // RECOVER PASSWORD
 ROUTER.post('/login', login) // LOGIN
-ROUTER.post('/events', eventsImg.single('image'), isAuth, events) //CREATE EVENTS
-ROUTER.get('/attendees/:_id', isConfirmedEvent, attendees) // ATTENDEES CONFIRM EVENTS - REGISTER ALL USER AND VISITES
 
 module.exports = ROUTER

@@ -1,12 +1,45 @@
 const Event = require('../../models/eventModel')
 const { deleteImg } = require('../../middleware/deleteImage')
+const Attendees = require('../../models/attendeesModel')
+const User = require('../../models/userModel')
+const { newEventEmail } = require('../UserController/helpers/sendEmails')
+
+const events = async (req, res) => {
+  const { user } = req
+  try {
+    const event = new Event(req.body)
+    event.image = req.file.path
+    event.creator = user._id
+    await event.save()
+    newEventEmail({ user, event })
+    await User.updateOne({ _id: user._id }, { $push: { events: event._id } })
+    const newEvent = await Event.findById(event._id).populate({
+      path: 'creator',
+      select: 'name lastName email avatar roles'
+    })
+    return res
+      .status(200)
+      .json({ message: 'Event create successfully🤩', newEvent })
+  } catch (error) {
+    console.log(error)
+    return res
+      .status(500)
+      .json({ message: 'Ups, there was a problem, please try again😑' })
+  }
+}
 
 const getEvents = async (req, res) => {
   try {
-    const events = await Event.find().populate({
-      path: 'creator',
-      select: 'name lastName email roles avatar'
-    })
+    const attendees = await Attendees.find()
+    const events = await Event.find()
+      .populate({
+        path: 'creator',
+        select: 'name lastName email roles avatar'
+      })
+      .populate({
+        path: 'attendees',
+        select: 'name lastName email'
+      })
     return res.status(200).json({ message: 'Events', events })
   } catch (error) {
     console.log(error)
@@ -16,12 +49,17 @@ const getEvents = async (req, res) => {
   }
 }
 const getEvent = async (req, res) => {
-  const { _id } = req.params
+  const { id } = req.params
   try {
-    const event = await Event.findById(_id).populate({
-      path: 'creator',
-      select: 'name lastName email roles avatar'
-    })
+    const event = await Event.findById(id)
+      .populate({
+        path: 'creator',
+        select: 'name lastName email roles avatar'
+      })
+      .populate({
+        path: 'attendees',
+        select: 'name lastName email'
+      })
     if (!event) return res.status(409).json({ message: 'Event not found' })
     return res.status(200).json({ message: 'Event found', event })
   } catch (error) {
@@ -33,16 +71,16 @@ const getEvent = async (req, res) => {
 }
 const updateEvent = async (req, res) => {
   const { user } = req
-  const { _id } = req.params
+  const { id } = req.params
   try {
-    const event = await Event.findById(_id)
+    const event = await Event.findById(id)
     if (!event) return res.status(404).json({ message: 'Event not found' })
     if (req.file) {
       await deleteImg(event.image)
       req.body.image = req.file.path
     }
     const updateEvent = await Event.findByIdAndUpdate(
-      _id,
+      id,
       { $set: req.body },
       { new: true }
     )
@@ -56,4 +94,4 @@ const updateEvent = async (req, res) => {
   }
 }
 
-module.exports = { getEvents, getEvent, updateEvent }
+module.exports = { getEvents, getEvent, updateEvent, events }

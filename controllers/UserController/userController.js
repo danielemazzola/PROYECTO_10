@@ -94,59 +94,10 @@ const newPassword = async (req, res) => {
       .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
-const events = async (req, res) => {
-  const { user } = req
-  try {
-    const event = new Event(req.body)
-    event.image = req.file.path
-    event.creator = user._id
-    await event.save()
-    newEventEmail({ user, event })
-    await User.updateOne({ _id: user._id }, { $push: { events: event._id } })
-    const newEvent = await Event.findById(event._id).populate({
-      path: 'creator',
-      select: 'name lastName email avatar roles'
-    })
-    return res
-      .status(200)
-      .json({ message: 'Event create successfully🤩', newEvent })
-  } catch (error) {
-    console.log(error)
-    return res
-      .status(500)
-      .json({ message: 'Ups, there was a problem, please try again😑' })
-  }
-}
-const attendees = async (req, res) => {
-  let user = {}
-  const { _id } = req.params
-  const { name, lastName, email } = req.body
-  try {
-    const event = await Event.findById(_id)
-    if (!event) return res.status(409).json({ message: 'Event not found😢' })
-    const attendeenses = new Attendees({
-      name: name,
-      lastName: lastName,
-      email: email,
-      eventId: _id
-    })
-    await attendeenses.save()
-    user = { name, lastName, email }
-    confirmEvent({ user, event })
-    return res.status(200).json({ message: 'Event confirmed🥳' })
-  } catch (error) {
-    console.log(error)
-    return res
-      .status(500)
-      .json({ message: 'Ups, there was a problem, please try again😑' })
-  }
-}
 
 module.exports = {
   create,
   recoverPassword,
   newPassword,
-  login,
-  events,
-  attendees
+  login
 }

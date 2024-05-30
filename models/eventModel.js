@@ -27,7 +27,13 @@ const eventSchema = mongoose.Schema(
     creator: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
-    }
+    },
+    attendees: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Attendees'
+      }
+    ]
   },
   {
     timestamps: true,

@@ -4,14 +4,16 @@ const { Authority } = require('../middleware/authority')
 const { eventsImg } = require('../middleware/uploadImage')
 
 const {
+  events,
   getEvents,
   getEvent,
   updateEvent
 } = require('../controllers/EventController/eventController')
 const ROUTER = express.Router()
 
+ROUTER.post('/create-event', eventsImg.single('image'), isAuth, events) //CREATE EVENTS
 ROUTER.get('/', getEvents) // LIST EVENTS
-ROUTER.get('/:_id', getEvent) // EVENT
-ROUTER.put('/:_id', isAuth, Authority, eventsImg.single('image'), updateEvent)
+ROUTER.get('/:id', getEvent) // EVENT
+ROUTER.put('/:id', isAuth, Authority, eventsImg.single('image'), updateEvent)
 
 module.exports = ROUTER
