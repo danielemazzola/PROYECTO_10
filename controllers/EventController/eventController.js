@@ -30,16 +30,40 @@ const events = async (req, res) => {
 
 const getEvents = async (req, res) => {
   try {
-    const attendees = await Attendees.find()
-    const events = await Event.find()
-      .populate({
-        path: 'creator',
-        select: 'name lastName email roles avatar'
-      })
-      .populate({
+    const events = await Event.find().select('-attendees').populate({
+      path: 'creator',
+      select: 'name lastName email roles avatar'
+    })
+    return res.status(200).json({ message: 'Events', events })
+  } catch (error) {
+    console.log(error)
+    return res
+      .status(500)
+      .json({ message: 'Ups, there was a problem, please try again😑' })
+  }
+}
+const getEventsAuth = async (req, res) => {
+  const { user } = req
+  try {
+    const isAdmin = user.roles.includes('admin')
+
+    let events = await Event.find().populate({
+      path: 'creator',
+      select: 'name lastName email roles avatar'
+    })
+    let creator = events.map((val) => val.creator)
+    let eventCreator = creator.map((val) => val._id)
+    if (isAdmin) {
+      events = await Event.populate(events, {
         path: 'attendees',
         select: 'name lastName email'
       })
+    } else {
+      events = events.map((event) => ({
+        ...event.toObject(),
+        attendees: event.attendees.length
+      }))
+    }
     return res.status(200).json({ message: 'Events', events })
   } catch (error) {
     console.log(error)
@@ -94,4 +118,4 @@ const updateEvent = async (req, res) => {
   }
 }
 
-module.exports = { getEvents, getEvent, updateEvent, events }
+module.exports = { getEvents, getEvent, getEventsAuth, updateEvent, events }

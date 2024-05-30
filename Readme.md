@@ -55,6 +55,7 @@ Project 10 Rock the Code is a web application developed with Node.js that allows
 - **/api/events**
   - `POST /events` : Create events (requires authentication and allows image upload)
   - `GET /` : List events (not requires authentication)
+  - `GET /` : List events (requires authentication, if is an Admin, it will show the user profile, otherwise it will show the numberof users.)
   - `GET /:_id` : Get event details (not requires authentication)
   - `PUT /:_id` : Update event (requires authentication and permissions, allows image upload)
 
