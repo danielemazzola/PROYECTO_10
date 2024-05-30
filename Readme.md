@@ -61,7 +61,7 @@ Project 10 Rock the Code is a web application developed with Node.js that allows
 ### Attendee Routes
 
 - **/api/attendees**
-  - `GET /:_id` : View confirmed attendees for an event (not requires authentication)
+  - `POST /:_id` : Confirmed attendees for an event (not requires authentication)
   - `GET /` : List confirmed attendees (requires authentication)
   - `GET /:_id` : View attendee details (requires authentication)
 
