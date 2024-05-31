@@ -1,5 +1,4 @@
-const express = require('express')
-const ROUTER = express.Router()
+const ROUTER = require('express').Router()
 const { isAuth } = require('../middleware/isAuth')
 const { isConfirmedEvent } = require('../middleware/isConfirmedEvent')
 const {
