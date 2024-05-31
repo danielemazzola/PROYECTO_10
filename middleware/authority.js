@@ -6,9 +6,8 @@ const Authority = async (req, res, next) => {
   const { id } = req.params
   const event = await Event.findById(id)
   const isUser = await User.findById(event.creator)
-  const isAdmin = user.roles.filter((val) => val === 'admin')
-  if (isUser._id.toString() === user._id.toString() || isAdmin.length > 0)
-    next()
+  const isAdmin = user.roles.includes('admin')
+  if (isUser._id.toString() === user._id.toString() || isAdmin) next()
   else
     return res
       .status(401)
