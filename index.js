@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-const CORS = require('./config/CORS')
 const CONNECTDB = require('./config/CONNECTDB')
 const CONNECTION_CLOUDINARY = require('./config/CONNECTION_CLOUDINARY')
 const APP = express()
@@ -10,8 +9,8 @@ APP.use(express.json())
 APP.use(express.urlencoded({ extended: false }))
 CONNECTDB()
 CONNECTION_CLOUDINARY()
-CORS()
-
+const cors = require('cors')
+APP.use(cors())
 /******ROUTES******/
 //USER
 const userRouter = require('./routes/userRoutes')
