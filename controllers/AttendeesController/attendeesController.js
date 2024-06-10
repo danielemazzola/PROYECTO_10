@@ -6,6 +6,8 @@ const attendees = async (req, res) => {
   let user = {}
   const { id } = req.params
   const { name, lastName, email } = req.body
+  if ([name, lastName, email].includes(''))
+    return res.status(409).json({ message: 'All fields are required😢' })
   try {
     const event = await Event.findById(id)
     if (!event) return res.status(409).json({ message: 'Event not found😢' })

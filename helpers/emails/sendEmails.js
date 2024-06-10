@@ -21,7 +21,7 @@ const newUserEmail = async (user) => {
             border-radius: 10px;
         }
         .header {
-            background-color: #007bff;
+            background-color: #000000;
             color: #ffffff;
             padding: 10px;
             text-align: center;
@@ -59,7 +59,7 @@ const newUserEmail = async (user) => {
     <body>
         <div class="email-container">
             <div class="header">
-                <h1>Daniele's Company</h1>
+                <h1>Events</h1>
             </div>
             <div class="content">
                 <p>Hola <strong>${user.name}</strong>,</p>
@@ -102,7 +102,7 @@ const recoverEmail = async (user) => {
             border-radius: 10px;
         }
         .header {
-            background-color: #007bff;
+            background-color: #000000;
             color: #ffffff;
             padding: 10px;
             text-align: center;
@@ -140,18 +140,18 @@ const recoverEmail = async (user) => {
   <body>
       <div class="email-container">
           <div class="header">
-              <h1>Daniele's Company</h1>
+              <h1>Events</h1>
           </div>
           <div class="content">
               <p>Hola <strong>${user.name}</strong>,</p>
               <p>Hemos recibido una solicitud de recuperación de contraseña.</p>
               <p>En caso de no haber sido tú, por favor, ignora este email; en caso contrario accede a este enlace:</p>
-              <p><a href="${process.env.FRONTEND_URL_IP}/user/auth/recovery-password/${user.token}" class="button">Recuperar Contraseña</a></p>
+              <p><a href="${process.env.FRONTEND_URL_IP}/recovery-password/${user.token}" class="button">Recuperar Contraseña</a></p>
               <p>Deberás introducir los siguientes 3 números:</p>
               <p class="token">${user.token}</p>
               <p>Muchas gracias por estar con nosotros.</p>
               <p>Te saluda el equipo,</p>
-              <p><strong>Daniele's Company</strong></p>
+              <p><strong>Events</strong></p>
           </div>
           <div class="footer">
               <p>Este es un correo electrónico automático, por favor no respondas a este mensaje.</p>
@@ -183,7 +183,7 @@ const newPasswordEmail = async (user) => {
                 border-radius: 10px;
             }
             .header {
-                background-color: #007bff;
+                background-color: #000000;
                 color: #ffffff;
                 padding: 10px;
                 text-align: center;
@@ -207,7 +207,7 @@ const newPasswordEmail = async (user) => {
     <body>
         <div class="email-container">
             <div class="header">
-                <h1>Daniele's Company</h1>
+                <h1>Events</h1>
             </div>
             <div class="content">
                 <p>Hola <strong>${user.name}</strong>,</p>
@@ -248,7 +248,7 @@ const newEventEmail = async ({ user, event }) => {
             border-radius: 10px;
         }
         .header {
-            background-color: #007bff;
+            background-color: #000000;
             color: #ffffff;
             padding: 10px;
             text-align: center;
@@ -272,7 +272,7 @@ const newEventEmail = async ({ user, event }) => {
     <body>
       <div class="email-container">
           <div class="header">
-              <h1>Daniele's Company</h1>
+              <h1>Events</h1>
           </div>
           <div class="content">
               <p>Hola <strong>${user.name}</strong>,</p>
@@ -312,7 +312,7 @@ const confirmEvent = async ({ user, event }) => {
           border-radius: 10px;
       }
       .header {
-          background-color: #007bff;
+          background-color: #000000;
           color: #ffffff;
           padding: 10px;
           text-align: center;
@@ -348,7 +348,7 @@ const confirmEvent = async ({ user, event }) => {
   <body>
     <div class="email-container">
         <div class="header">
-            <h1>Daniele's Company</h1>
+            <h1>Events</h1>
         </div>
         <div class="content">
             <p>Hola <strong>${user.name}</strong>,</p>

@@ -18,28 +18,26 @@ const create = async (req, res, next) => {
   try {
     const duplicate = await User.findOne({ email })
     if (duplicate) {
-      deleteImg(req.file.path)
       return res
         .status(409)
         .json({ message: 'Existing user, please try to log in😊' })
     }
     const user = new User(req.body)
-    user.avatar = req.file.path
     await user.save()
     newUserEmail(user)
     return res
       .status(201)
       .json({ message: 'User registered successfully😉', user })
   } catch (error) {
-    if (req.file) deleteImg(req.file.path)
     console.log(error)
     return res
-      .status(201)
+      .status(500)
       .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
 const login = async (req, res) => {
   const { email, password } = req.body
+  console.log(email)
   try {
     const user = await User.findOne({ email })
     if (!user) return res.status(404).json({ message: 'User not found' })
@@ -58,6 +56,7 @@ const login = async (req, res) => {
 }
 const recoverPassword = async (req, res) => {
   const { email } = req.body
+  console.log(email)
   try {
     const user = await User.findOne({ email })
     if (!user) return res.status(404).json({ message: 'User not found' })
