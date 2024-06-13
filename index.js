@@ -16,7 +16,7 @@ APP.use(cors())
 const userRouter = require('./routes/userRoutes')
 APP.use('/api/auth', userRouter)
 
-//EVENTS
+//EVENT
 const eventRouter = require('./routes/eventRouter')
 APP.use('/api/events', eventRouter)
 
