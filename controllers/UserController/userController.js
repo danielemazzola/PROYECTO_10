@@ -55,7 +55,7 @@ const login = async (req, res) => {
   }
 }
 const recoverPassword = async (req, res) => {
-  const { email } = req.body
+  const email = req.body.email.toLowerCase()
   try {
     const user = await User.findOne({ email })
     if (!user) return res.status(404).json({ message: 'User not found' })
@@ -78,11 +78,9 @@ const newPassword = async (req, res) => {
   try {
     const user = await User.findOne({ token })
     if (!user)
-      return res
-        .status(409)
-        .json({
-          message: 'Token invalid. Please check your email to try again😢'
-        })
+      return res.status(409).json({
+        message: 'Token invalid. Please check your email to try again😢'
+      })
     const { password } = req.body
     user.password = password
     user.token = ''
