@@ -77,6 +77,12 @@ const newPassword = async (req, res) => {
   const { token } = req.params
   try {
     const user = await User.findOne({ token })
+    if (!user)
+      return res
+        .status(409)
+        .json({
+          message: 'Token invalid. Please check your email to try again😢'
+        })
     const { password } = req.body
     user.password = password
     user.token = ''
