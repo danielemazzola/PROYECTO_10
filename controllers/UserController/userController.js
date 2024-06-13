@@ -14,7 +14,7 @@ const {
 } = require('../../helpers/emails/sendEmails')
 
 const create = async (req, res, next) => {
-  const { email } = req.body
+  const email = req.body.email.toLowerCase()
   try {
     const duplicate = await User.findOne({ email })
     if (duplicate) {
@@ -22,7 +22,7 @@ const create = async (req, res, next) => {
         .status(409)
         .json({ message: 'Existing user, please try to log in😊' })
     }
-    const user = new User(req.body)
+    const user = new User({ ...req.body, email })
     await user.save()
     newUserEmail(user)
     return res
@@ -36,8 +36,8 @@ const create = async (req, res, next) => {
   }
 }
 const login = async (req, res) => {
-  const { email, password } = req.body
-  console.log(email)
+  const { password } = req.body
+  const email = req.body.email.toLowerCase()
   try {
     const user = await User.findOne({ email })
     if (!user) return res.status(404).json({ message: 'User not found' })
@@ -56,7 +56,6 @@ const login = async (req, res) => {
 }
 const recoverPassword = async (req, res) => {
   const { email } = req.body
-  console.log(email)
   try {
     const user = await User.findOne({ email })
     if (!user) return res.status(404).json({ message: 'User not found' })

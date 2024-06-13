@@ -34,6 +34,7 @@ const getEvents = async (req, res) => {
       path: 'creator',
       select: 'name lastName email roles avatar'
     })
+
     return res.status(200).json({ message: 'Events', events })
   } catch (error) {
     console.log(error)
