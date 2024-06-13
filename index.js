@@ -3,7 +3,7 @@ const express = require('express')
 const CONNECTDB = require('./config/CONNECTDB')
 const CONNECTION_CLOUDINARY = require('./config/CONNECTION_CLOUDINARY')
 const APP = express()
-const PORT = 4000
+const PORT = process.env.PORT || 4000
 
 APP.use(express.json())
 APP.use(express.urlencoded({ extended: false }))
