@@ -30,8 +30,7 @@ const userSchema = mongoose.Schema(
     avatar: {
       type: String,
       required: false,
-      default:
-        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fin.pinterest.com%2Fpin%2F312859505363637482%2F&psig=AOvVaw1xc609RSGr8ulavsUE8lpD&ust=1716909804318000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMio7MmRroYDFQAAAAAdAAAAABAE'
+      default: 'https://cdn-icons-png.flaticon.com/512/3541/3541871.png'
     },
     token: {
       type: String,
