@@ -97,9 +97,24 @@ const newPassword = async (req, res) => {
   }
 }
 
+const profile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id)
+      .select('-password -createdAt -updatedAt -__v')
+      .populate('events')
+    return res.status(200).json(user)
+  } catch (error) {
+    console.log(error)
+    return res
+      .status(500)
+      .json({ message: 'Ups, there was a problem, please try again😑' })
+  }
+}
+
 module.exports = {
   create,
   recoverPassword,
   newPassword,
-  login
+  login,
+  profile
 }
