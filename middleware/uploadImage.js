@@ -18,7 +18,7 @@ const uploadFolder = (folderName) => {
   const storage = createStorage(folderName)
   return multer({ storage })
 }
-const profile = uploadFolder('avatar')
+const profileAvatar = uploadFolder('avatar')
 const eventsImg = uploadFolder('events')
 
-module.exports = { eventsImg, profile }
+module.exports = { eventsImg, profileAvatar }

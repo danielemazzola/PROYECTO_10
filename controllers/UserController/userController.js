@@ -1,16 +1,12 @@
 const bcrypt = require('bcrypt')
 const User = require('../../models/userModel')
-const Event = require('../../models/eventModel')
-const Attendees = require('../../models/attendeesModel')
 const { generateJWT } = require('../../helpers/generateJWT')
 const { generateToken } = require('../../helpers/generateToken')
 const { deleteImg } = require('../../middleware/deleteImage')
 const {
   newUserEmail,
   recoverEmail,
-  newPasswordEmail,
-  newEventEmail,
-  confirmEvent
+  newPasswordEmail
 } = require('../../helpers/emails/sendEmails')
 
 const create = async (req, res, next) => {
@@ -111,10 +107,34 @@ const profile = async (req, res, next) => {
   }
 }
 
+const updateAvatar = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id)
+    if (!user) return res.status(404).json({ message: 'User not found' })
+    if (req.file) {
+      await deleteImg(user.avatar)
+      req.body.image = req.file.path
+    }
+    await User.findByIdAndUpdate(
+      user._id,
+      { $set: { avatar: req.body.image } },
+      { new: true }
+    )
+    if (!user) return res.status(404).json({ message: 'User not found' })
+    return res.status(201).json({ message: 'User update' })
+  } catch (error) {
+    console.log(error)
+    return res
+      .status(500)
+      .json({ message: 'Ups, there was a problem, please try again😑' })
+  }
+}
+
 module.exports = {
   create,
   recoverPassword,
   newPassword,
   login,
-  profile
+  profile,
+  updateAvatar
 }

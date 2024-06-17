@@ -12,11 +12,9 @@ const isAuth = async (req, res, next) => {
     const decode = verifyToken(token, process.env.JWT_KEY)
     const user = await User.findById(decode.id)
     if (!user) {
-      return res
-        .status(401)
-        .json({
-          message: 'You are not registerd on the website, please register😑'
-        })
+      return res.status(401).json({
+        message: 'You are not registerd on the website, please register😑'
+      })
     } else {
       req.user = user
       next()
