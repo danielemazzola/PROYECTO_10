@@ -120,9 +120,8 @@ const updateAvatar = async (req, res) => {
       { $set: { avatar: req.body.image } },
       { new: true }
     )
-    if (!user)
-      return res.status(404).json({ message: 'User not found', updateAvatar })
-    return res.status(201).json({ message: 'User update' })
+    if (!user) return res.status(404).json({ message: 'User not found' })
+    return res.status(201).json({ message: 'User update', updateAvatar })
   } catch (error) {
     console.log(error)
     return res
