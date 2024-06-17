@@ -115,12 +115,13 @@ const updateAvatar = async (req, res) => {
       await deleteImg(user.avatar)
       req.body.image = req.file.path
     }
-    await User.findByIdAndUpdate(
+    const updateAvatar = await User.findByIdAndUpdate(
       user._id,
       { $set: { avatar: req.body.image } },
       { new: true }
     )
-    if (!user) return res.status(404).json({ message: 'User not found' })
+    if (!user)
+      return res.status(404).json({ message: 'User not found', updateAvatar })
     return res.status(201).json({ message: 'User update' })
   } catch (error) {
     console.log(error)
