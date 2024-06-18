@@ -147,8 +147,6 @@ const recoverEmail = async (user) => {
               <p>Hemos recibido una solicitud de recuperación de contraseña.</p>
               <p>En caso de no haber sido tú, por favor, ignora este email; en caso contrario accede a este enlace:</p>
               <p><a href="${process.env.FRONTEND_URL_IP}/recovery-password/${user.token}" class="button">Recuperar Contraseña</a></p>
-              <p>Deberás introducir los siguientes 3 números:</p>
-              <p class="token">${user.token}</p>
               <p>Muchas gracias por estar con nosotros.</p>
               <p>Te saluda el equipo,</p>
               <p><strong>Events</strong></p>
