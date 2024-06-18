@@ -42,7 +42,7 @@ const newUserEmail = async (user) => {
         }
         .button {
             display: inline-block;
-            background-color: #007bff;
+            background-color: #000000;
             color: #ffffff;
             padding: 10px 20px;
             text-decoration: none;
@@ -123,7 +123,7 @@ const recoverEmail = async (user) => {
         }
         .button {
             display: inline-block;
-            background-color: #007bff;
+            background-color: #000000;
             color: #ffffff;
             padding: 10px 20px;
             text-decoration: none;
