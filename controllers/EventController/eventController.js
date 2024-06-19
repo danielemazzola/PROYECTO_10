@@ -128,7 +128,7 @@ const getMyEvents = async (req, res) => {
       return res
         .status(409)
         .json({ message: 'You not have any events created😑' })
-    else return res.status(201).json({ message: 'Your Events❤️', events })
+    else return res.status(201).json({ message: 'My Events❤️', events })
   } catch (error) {
     console.log(error)
     return res
