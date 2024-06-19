@@ -117,11 +117,31 @@ const updateEvent = async (req, res) => {
       .json({ message: 'Ups, there was a problem, please try again😑' })
   }
 }
+const getMyEvents = async (req, res) => {
+  const { user } = req
+  try {
+    const events = await Event.find()
+      .where('creator')
+      .equals(user._id)
+      .populate('attendees')
+    if (!events)
+      return res
+        .status(409)
+        .json({ message: 'You not have any events created😑' })
+    else return res.status(409).json({ message: 'Your Events❤️', events })
+  } catch (error) {
+    console.log(error)
+    return res
+      .status(500)
+      .json({ message: 'Ups, there was a problem, please try again😑' })
+  }
+}
 
 module.exports = {
   createEvent,
   getEvents,
   getEventsAuth,
   getEvent,
-  updateEvent
+  updateEvent,
+  getMyEvents
 }
