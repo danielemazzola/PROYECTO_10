@@ -1,10 +1,9 @@
 const Event = require('../../models/eventModel')
 const { deleteImg } = require('../../middleware/deleteImage')
-const Attendees = require('../../models/attendeesModel')
 const User = require('../../models/userModel')
 const { newEventEmail } = require('../../helpers/emails/sendEmails')
 
-const events = async (req, res) => {
+const createEvent = async (req, res) => {
   const { user } = req
   try {
     const event = new Event(req.body)
@@ -119,4 +118,10 @@ const updateEvent = async (req, res) => {
   }
 }
 
-module.exports = { getEvents, getEvent, getEventsAuth, updateEvent, events }
+module.exports = {
+  createEvent,
+  getEvents,
+  getEventsAuth,
+  getEvent,
+  updateEvent
+}
