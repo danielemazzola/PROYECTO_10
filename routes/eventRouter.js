@@ -16,6 +16,6 @@ ROUTER.get('/my-events', isAuth, getMyEvents)
 ROUTER.get('/events-auth', isAuth, getEventsAuth) // LIST EVENTS
 ROUTER.get('/:id', getEvent) // EVENT
 ROUTER.post('/create-event', eventsImg.single('image'), isAuth, createEvent) //CREATE EVENTS
-ROUTER.put('/:id', isAuth, Authority, eventsImg.single('image'), updateEvent)
+ROUTER.put('/:id', isAuth, Authority, eventsImg.single('image'), updateEvent) //UPDATE EVENT
 
 module.exports = ROUTER

@@ -5,6 +5,7 @@ const { newEventEmail } = require('../../helpers/emails/sendEmails')
 
 const createEvent = async (req, res) => {
   const { user } = req
+  console.log(req.file.path)
   try {
     const event = new Event(req.body)
     event.image = req.file.path
@@ -108,8 +109,9 @@ const updateEvent = async (req, res) => {
       { $set: req.body },
       { new: true }
     )
-    if (!event) return res.status(404).json({ message: 'Event not found' })
-    return res.status(201).json({ message: 'Event update', updateEvent })
+    const update = await Event.findById(updateEvent._id).populate('creator')
+    if (!update) return res.status(404).json({ message: 'Event not found' })
+    return res.status(201).json({ message: 'Event update', update })
   } catch (error) {
     console.log(error)
     return res
