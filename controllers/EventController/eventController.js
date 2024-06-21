@@ -53,7 +53,7 @@ const getEventsAuth = async (req, res) => {
       select: 'name lastName email roles avatar'
     })
     let creator = events.map((val) => val.creator)
-    let eventCreator = creator.map((val) => val._id)
+    /* let eventCreator = creator.map((val) => val._id) */
     if (isAdmin) {
       events = await Event.populate(events, {
         path: 'attendees',
@@ -98,20 +98,33 @@ const updateEvent = async (req, res) => {
   const { user } = req
   const { id } = req.params
   try {
+    const isAdmin = user.roles.includes('admin')
+
     const event = await Event.findById(id)
+
     if (!event) return res.status(404).json({ message: 'Event not found' })
     if (req.file) {
       await deleteImg(event.image)
       req.body.image = req.file.path
     }
-    const updateEvent = await Event.findByIdAndUpdate(
+    let updateEvent = await Event.findByIdAndUpdate(
       id,
       { $set: req.body },
       { new: true }
-    )
-    const update = await Event.findById(updateEvent._id).populate('creator')
-    if (!update) return res.status(404).json({ message: 'Event not found' })
-    return res.status(201).json({ message: 'Event update', update })
+    ).populate('creator')
+    if (!updateEvent)
+      return res.status(404).json({ message: 'Event not found' })
+
+    if (isAdmin) {
+      updateEvent = await updateEvent.populate({
+        path: 'attendees',
+        select: 'name lastName email'
+      })
+    } else {
+      updateEvent.attendees = updateEvent.attendees.length
+    }
+
+    return res.status(201).json({ message: 'Event update', updateEvent })
   } catch (error) {
     console.log(error)
     return res
