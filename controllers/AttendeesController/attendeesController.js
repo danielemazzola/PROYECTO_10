@@ -21,7 +21,7 @@ const attendees = async (req, res) => {
     await Event.findByIdAndUpdate(id, { $push: { attendees: attendence._id } })
     user = { name, lastName, email }
     confirmEvent({ user, event })
-    return res.status(200).json({ message: 'Event confirmed🥳' })
+    return res.status(200).json({ message: 'Event confirmed🥳', attendence })
   } catch (error) {
     console.log(error)
     return res

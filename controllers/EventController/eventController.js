@@ -5,10 +5,11 @@ const { newEventEmail } = require('../../helpers/emails/sendEmails')
 
 const createEvent = async (req, res) => {
   const { user } = req
-  console.log(req.file.path)
   try {
     const event = new Event(req.body)
-    event.image = req.file.path
+    if (req.file) {
+      event.image = req.file.path
+    }
     event.creator = user._id
     await event.save()
     newEventEmail({ user, event })
@@ -48,23 +49,16 @@ const getEventsAuth = async (req, res) => {
   try {
     const isAdmin = user.roles.includes('admin')
 
-    let events = await Event.find().populate({
-      path: 'creator',
-      select: 'name lastName email roles avatar'
-    })
-    let creator = events.map((val) => val.creator)
-    /* let eventCreator = creator.map((val) => val._id) */
-    if (isAdmin) {
-      events = await Event.populate(events, {
-        path: 'attendees',
-        select: 'name lastName email'
+    let events = await Event.find()
+      .populate({
+        path: 'creator',
+        select: 'name lastName email roles avatar'
       })
-    } else {
-      events = events.map((event) => ({
-        ...event.toObject(),
-        attendees: event.attendees.length
-      }))
-    }
+      .populate({
+        path: 'attendees',
+        select: 'name lastName email eventId'
+      })
+
     return res.status(200).json({ message: 'Events', events })
   } catch (error) {
     console.log(error)
