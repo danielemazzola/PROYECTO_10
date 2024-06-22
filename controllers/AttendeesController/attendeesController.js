@@ -61,4 +61,25 @@ const getProfileAttendees = async (req, res) => {
   }
 }
 
-module.exports = { attendees, getAttendees, getProfileAttendees }
+const removeAttendance = async (req, res) => {
+  const { user } = req
+  const { remove } = req.params
+  try {
+    const removeAttendance = await Attendees.findByIdAndDelete(remove)
+    if (!removeAttendance) {
+      return res.status(409).json({ message: 'Attendees not found😢' })
+    } else {
+      return res.status(200).json({ message: '💔Ciao.....' })
+    }
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ message: 'Error interno del servidor' })
+  }
+}
+
+module.exports = {
+  attendees,
+  getAttendees,
+  getProfileAttendees,
+  removeAttendance
+}

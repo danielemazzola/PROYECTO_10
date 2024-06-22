@@ -4,11 +4,13 @@ const { isConfirmedEvent } = require('../middleware/isConfirmedEvent')
 const {
   attendees,
   getAttendees,
-  getProfileAttendees
+  getProfileAttendees,
+  removeAttendance
 } = require('../controllers/AttendeesController/attendeesController')
 
-ROUTER.post('/:id', isConfirmedEvent, attendees) // ATTENDEES CONFIRM EVENTS - REGISTER ALL USER AND VISITES
 ROUTER.get('/', isAuth, getAttendees) // LIST ATTENDEES CONFIRMED
 ROUTER.get('/:id', isAuth, getProfileAttendees) // ATTENDEES DETAILS
+ROUTER.post('/:id', isConfirmedEvent, attendees) // ATTENDEES CONFIRM EVENTS - REGISTER ALL USER AND VISITES
+ROUTER.delete('/:remove', isAuth, removeAttendance) // REMOVE ATTENDEES
 
 module.exports = ROUTER
