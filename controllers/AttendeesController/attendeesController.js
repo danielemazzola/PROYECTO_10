@@ -2,7 +2,7 @@ const Attendees = require('../../models/attendeesModel')
 const Event = require('../../models/eventModel')
 const { confirmEvent } = require('../../helpers/emails/sendEmails')
 
-const attendees = async (req, res) => {
+const registerAttendees = async (req, res) => {
   let user = {}
   const { id } = req.params
   const { name, lastName, email } = req.body
@@ -78,7 +78,7 @@ const removeAttendance = async (req, res) => {
 }
 
 module.exports = {
-  attendees,
+  registerAttendees,
   getAttendees,
   getProfileAttendees,
   removeAttendance
