@@ -9,7 +9,7 @@ const registerAttendees = async (req, res) => {
   if ([name, lastName, email].includes(''))
     return res.status(409).json({ message: 'All fields are required😢' })
   try {
-    const event = await Event.findById(id)
+    let event = await Event.findById(id)
     if (!event) return res.status(409).json({ message: 'Event not found😢' })
     const attendence = new Attendees({
       name: name,
@@ -18,10 +18,21 @@ const registerAttendees = async (req, res) => {
       eventId: id
     })
     await attendence.save()
-    await Event.findByIdAndUpdate(id, { $push: { attendees: attendence._id } })
+    event = await Event.findByIdAndUpdate(
+      id,
+      {
+        $push: { attendees: attendence._id }
+      },
+      { new: true }
+    )
     user = { name, lastName, email }
+
+    //SEND EMAIL
     confirmEvent({ user, event })
-    return res.status(200).json({ message: 'Event confirmed🥳', attendence })
+
+    return res
+      .status(200)
+      .json({ message: `Event ${event.title} confirmed🥳`, attendence })
   } catch (error) {
     console.log(error)
     return res
@@ -62,15 +73,31 @@ const getProfileAttendees = async (req, res) => {
 }
 
 const removeAttendance = async (req, res) => {
-  const { user } = req
   const { remove } = req.params
+
   try {
+    const attendee = await Attendees.findById(remove)
+    if (!attendee) {
+      return res.status(409).json({ message: 'Attendee not found 😢' })
+    }
+    const { eventId } = attendee
     const removeAttendance = await Attendees.findByIdAndDelete(remove)
     if (!removeAttendance) {
       return res.status(409).json({ message: 'Attendees not found😢' })
-    } else {
-      return res.status(200).json({ message: '💔Ciao.....' })
     }
+    const updateListAttendancesEvent = await Event.findByIdAndUpdate(
+      eventId,
+      {
+        $pull: { attendees: remove }
+      },
+      { new: true }
+    )
+    if (!updateListAttendancesEvent) {
+      return res.status(409).json({ message: 'Event not found 😢' })
+    }
+    return res.status(200).json({
+      message: `Event: ${updateListAttendancesEvent.title} cancelled💔`
+    })
   } catch (error) {
     console.error(error)
     return res.status(500).json({ message: 'Error interno del servidor' })
