@@ -63,9 +63,10 @@ Project 10 Rock the Code is a web application developed with Node.js that allows
 ### Attendee Routes
 
 - **/api/attendees**
-  - `POST /:_id` : Confirmed attendees for an event (not requires authentication)
   - `GET /` : List confirmed attendees (requires authentication)
-  - `GET /:_id` : View attendee details (requires authentication)
+  - `GET /:id` : View attendee details (requires authentication)
+  - `POST /:id` : Confirmed attendees for an event (not requires authentication)
+  - `DELETE /:remove` : Delete attendees for an event (requires authentication)
 
 ## Middleware 🔒
 
@@ -125,6 +126,17 @@ The attendees model defines the relationship between users and events, tracking 
 - Password modification email.
 - Event creation email.
 - Event attendance confirmation email.
+
+## .ENV 🔐
+
+- FRONTEND_URL_IP
+- CONNECT_DDBB
+- JWT_KEY
+- CLOUDINARY_NAME
+- CLOUDINARY_KEY
+- CLOUDINARY_SECRET
+- EMAIL_HOST
+- PASSWORD_HOST
 
 ## Author
 

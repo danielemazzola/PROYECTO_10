@@ -68,8 +68,14 @@ const getProfileAttendees = async (req, res) => {
     const user = await User.findOne({ email: attendees.email })
       .populate('events')
       .select('-password')
-    if (user) attendance = user
-    else attendance = attendees
+    if (user) {
+      attendance = {
+        ...user.toObject(), // Convertimos user a un objeto plano
+        title: attendees.eventId.title // Añadimos el título del evento
+      }
+    } else {
+      attendance = attendees.toObject()
+    }
     return res.status(200).json({ message: 'Attendance found😎', attendance })
   } catch (error) {
     console.log(error)
