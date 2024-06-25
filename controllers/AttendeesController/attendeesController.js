@@ -63,7 +63,7 @@ const getProfileAttendees = async (req, res) => {
     })
     if (!attendees)
       return res.status(409).json({ message: 'Attendees not found😢' })
-    return res.status(200).json({ message: 'Attendees found😎', attendees })
+    return res.status(200).json({ message: 'Attendance found😎', attendees })
   } catch (error) {
     console.log(error)
     return res
