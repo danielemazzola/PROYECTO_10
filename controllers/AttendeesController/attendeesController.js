@@ -1,6 +1,7 @@
 const Attendees = require('../../models/attendeesModel')
 const Event = require('../../models/eventModel')
 const { confirmEvent } = require('../../helpers/emails/sendEmails')
+const User = require('../../models/userModel')
 
 const registerAttendees = async (req, res) => {
   let user = {}
@@ -56,6 +57,7 @@ const getAttendees = async (req, res) => {
 }
 const getProfileAttendees = async (req, res) => {
   const { id } = req.params
+  let attendance = {}
   try {
     const attendees = await Attendees.findById(id).populate({
       path: 'eventId',
@@ -63,7 +65,12 @@ const getProfileAttendees = async (req, res) => {
     })
     if (!attendees)
       return res.status(409).json({ message: 'Attendees not found😢' })
-    return res.status(200).json({ message: 'Attendance found😎', attendees })
+    const user = await User.findOne({ email: attendees.email })
+      .populate('events')
+      .select('-password')
+    if (user) attendance = user
+    else attendance = attendees
+    return res.status(200).json({ message: 'Attendance found😎', attendance })
   } catch (error) {
     console.log(error)
     return res
