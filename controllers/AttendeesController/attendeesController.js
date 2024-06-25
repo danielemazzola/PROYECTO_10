@@ -71,7 +71,7 @@ const getProfileAttendees = async (req, res) => {
     if (user) {
       attendance = {
         ...user.toObject(), // Convertimos user a un objeto plano
-        title: attendees.eventId.title // Añadimos el título del evento
+        eventToAttendees: attendees // Añadimos el título del evento
       }
     } else {
       attendance = attendees.toObject()
