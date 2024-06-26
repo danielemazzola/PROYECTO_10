@@ -73,7 +73,6 @@ const getProfileAttendees = async (req, res) => {
         ...user.toObject(),
         attendance: attendees
       }
-      console.log(attendance)
     } else {
       attendance = attendees.toObject()
     }
