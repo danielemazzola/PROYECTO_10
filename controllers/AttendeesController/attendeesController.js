@@ -70,8 +70,8 @@ const getProfileAttendees = async (req, res) => {
       .select('-password')
     if (user) {
       attendance = {
-        ...user.toObject(), // Convertimos user a un objeto plano
-        eventToAttendees: attendees // Añadimos el título del evento
+        ...user.toObject(),
+        eventToAttendees: attendees
       }
     } else {
       attendance = attendees.toObject()
